@@ -89,7 +89,7 @@ public class BlogApiJsonDirectAccess : IBlogApi
     }
     private void DeleteAsync<T>(List<T>? list, string folder, string id)
     {
-        var filepath = $@"{_settings.DataPath}\{folder}\{filename}";
+        var filepath = $@"{_settings.DataPath}\{folder}\{id}.json";
         try
         {
             File.Delete(filepath);
