@@ -15,18 +15,10 @@
 </ul>
 
 
-<ErrorBoundary Context=ex>
-    <ChildContent>
-        <p>@(1 / zero)</p>
-    </ChildContent> 
-    <ErrorContent>
-        An error occurred @ex.Message
-    </ErrorContent>
-</ErrorBoundary>
 
 
 @code {
-    int zero = 0;
+
     public int totalBlogPosts { get; set; }
     private async ValueTask<ItemsProviderResult<BlogPost>> LoadPosts(ItemsProviderRequest request)
     {
