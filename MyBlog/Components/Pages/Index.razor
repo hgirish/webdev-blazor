@@ -6,27 +6,36 @@
 @inject IBlogApi _api
 
 <ul>
-    @foreach (var p in posts)
-    {
-        <li>@p.Title</li>
-    }
+    <Virtualize ItemsProvider="LoadPosts" Context="p">
+        <li>
+            <a href="/Post/@p.Id">@p.Title</a>
+        </li>
+    </Virtualize>
+   
 </ul>
-<Counter IncrementAmount="@incrementAmount" @bind-CurrentCount="@currentCount"></Counter>
-The current count is @currentCount
 
-<hr />
-<button @onclick="@((e)=>message=$"x:{e.ClientX} y:{e.ClientY}")">Click me</button>
-<p>@message</p>
+
+<ErrorBoundary Context=ex>
+    <ChildContent>
+        <p>@(1 / zero)</p>
+    </ChildContent> 
+    <ErrorContent>
+        An error occurred @ex.Message
+    </ErrorContent>
+</ErrorBoundary>
 
 
 @code {
-    int incrementAmount = 10;
-    int currentCount = 0;
-    protected List<BlogPost> posts = new List<BlogPost>();
-    string message;
-    protected override async Task OnInitializedAsync()
+    int zero = 0;
+    public int totalBlogPosts { get; set; }
+    private async ValueTask<ItemsProviderResult<BlogPost>> LoadPosts(ItemsProviderRequest request)
     {
-        posts = await _api.GetBlogPostsAsync(10, 0);
-        await base.OnInitializedAsync();
+        if (totalBlogPosts == 0)
+        {
+            totalBlogPosts = await _api.GetBlogPostCountAsync();
+        }
+        var numBlogPosts = Math.Min(request.Count, totalBlogPosts - request.StartIndex);
+        var blogPosts = await _api.GetBlogPostsAsync(numBlogPosts, request.StartIndex);
+        return new ItemsProviderResult<BlogPost>(blogPosts, totalBlogPosts);
     }
 }
