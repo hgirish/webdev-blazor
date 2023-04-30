@@ -1,0 +1,27 @@
+﻿@page "/alerttest"
+
+@using Components.RazorComponents
+
+
+<Alert Style="Alert.AlertStyle.Danger">This is a test</Alert>
+
+<Alert Style="Alert.AlertStyle.Success">
+    <ChildContent>
+        This is another test
+    </ChildContent>
+    <ChildContent>
+        This is second test
+    </ChildContent>
+</Alert>
+<Alert></Alert>
+<Alert Style="Alert.AlertStyle.Dark" />
+
+<Alert Style="Alert.AlertStyle.Danger">
+     <ChildContent>
+        This is inside test
+    </ChildContent>
+</Alert>
+
+@code {
+
+}

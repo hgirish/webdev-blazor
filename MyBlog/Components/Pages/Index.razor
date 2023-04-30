@@ -14,11 +14,16 @@
 <Counter IncrementAmount="@incrementAmount" @bind-CurrentCount="@currentCount"></Counter>
 The current count is @currentCount
 
+<hr />
+<button @onclick="@((e)=>message=$"x:{e.ClientX} y:{e.ClientY}")">Click me</button>
+<p>@message</p>
+
+
 @code {
     int incrementAmount = 10;
     int currentCount = 0;
     protected List<BlogPost> posts = new List<BlogPost>();
-
+    string message;
     protected override async Task OnInitializedAsync()
     {
         posts = await _api.GetBlogPostsAsync(10, 0);
