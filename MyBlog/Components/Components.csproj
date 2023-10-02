@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MarkDig" Version="0.31.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.5" />
+    <PackageReference Include="MarkDig" Version="0.33.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.11" />
   </ItemGroup>
 
   <ItemGroup>
