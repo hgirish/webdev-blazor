@@ -1,8 +1,17 @@
-﻿<Router AppAssembly="@typeof(App).Assembly"
+﻿<CascadingAuthenticationState>
+<Router AppAssembly="@typeof(App).Assembly"
 AdditionalAssemblies="new[] {typeof(Components.Pages.Index).Assembly}"
 >
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" >
+            <Authorizing>
+                <p>Determining session state, please wait...</p>
+            </Authorizing>
+            <NotAuthorized>
+                <h1>Sorry</h1>
+                <p>Your're not authorized to reach this page. You need to log in.</p>
+            </NotAuthorized>
+        </AuthorizeRouteView>
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
     <NotFound>
@@ -12,3 +21,4 @@ AdditionalAssemblies="new[] {typeof(Components.Pages.Index).Assembly}"
         </LayoutView>
     </NotFound>
 </Router>
+</CascadingAuthenticationState>
