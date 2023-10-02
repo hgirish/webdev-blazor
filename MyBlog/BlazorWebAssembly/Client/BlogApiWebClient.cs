@@ -2,9 +2,10 @@
 using Data.Models.Interfaces;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using System.Net.Http.Json;
+using System.Security.Principal;
 using System.Text.Json;
 
-public class BlogApiWebClient : IBlogApi
+public partial class BlogApiWebClient : IBlogApi
 {
     private readonly IHttpClientFactory _factory;
 
@@ -25,7 +26,7 @@ public class BlogApiWebClient : IBlogApi
         {
             exception.Redirect();
         }
-        
+
     }
 
     public async Task DeleteCategoryAsync(string id)
@@ -120,7 +121,7 @@ public class BlogApiWebClient : IBlogApi
             var json = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<BlogPost>(json);
         }
-        catch(AccessTokenNotAvailableException exception)
+        catch (AccessTokenNotAvailableException exception)
         {
             exception.Redirect();
         }

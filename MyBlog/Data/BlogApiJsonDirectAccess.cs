@@ -15,9 +15,11 @@ public class BlogApiJsonDirectAccess : IBlogApi
         IOptions<BlogApiJsonDirectAccessSetting> option)
     {
         _settings = option.Value;
+        Console.WriteLine(Path.GetFullPath(_settings.DataPath));
         if (!Directory.Exists(_settings.DataPath))
         {
-            Directory.CreateDirectory(_settings.DataPath);
+           var info = Directory.CreateDirectory(_settings.DataPath);
+            Console.WriteLine($"info: {info}");
         }
         var blogPostsFolderPath =
             $@"{_settings.DataPath}\{_settings.BlogPostsFolder}";
@@ -46,6 +48,9 @@ public class BlogApiJsonDirectAccess : IBlogApi
         {
             list = new();
             var fullpath = $@"{_settings.DataPath}\{folder}";
+            Console.WriteLine(fullpath);
+            var dirs = Directory.GetFiles(fullpath);
+            Console.WriteLine(dirs.Length);
             foreach (var f in Directory.GetFiles(fullpath))
             {
                 var json = File.ReadAllText(f);

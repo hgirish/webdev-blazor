@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+    <UserSecretsId>a0915b59-1f99-4bb0-9d68-c698332b3db0</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,11 +17,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Components\Components.csproj" />
+    <ProjectReference Include="..\..\Data\Data.csproj" />
     <ProjectReference Include="..\Shared\BlazorWebAssembly.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

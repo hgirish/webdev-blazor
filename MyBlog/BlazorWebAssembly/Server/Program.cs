@@ -5,18 +5,22 @@ using Data;
 using Data.Models.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+string rootpath = System.IO.Path.Combine(
+    System.IO.Directory.GetCurrentDirectory(),
+    "wwwroot");
 
+var dataPath = Path.GetFullPath(@"..\..\..\Data\");
 builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>()
     .Configure(options =>
     {
-        options.DataPath = @"..\..\..\Data\";
+        options.DataPath = rootpath;
         options.BlogPostsFolder = "BlogPosts";
         options.TagsFolder = "Tags";
         options.CategoriesFolder = "Categories";
@@ -30,6 +34,17 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 });
 
 builder.Services.AddTransient<ILoginStatus, LoginStatus>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
+    {
+        c.Authority = builder.Configuration["Auth0:Authority"];
+        c.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidAudience = builder.Configuration["Auth0:Audience"],
+            ValidIssuer = builder.Configuration["Auth0:Authority"]
+        };
+    });
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
