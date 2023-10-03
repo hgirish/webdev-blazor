@@ -2,9 +2,11 @@
 @inject ILoginStatus status 
 
 <div class="page">
+    <AuthorizeView Roles="Administrator">
     <div class="sidebar">
         <NavMenu />
-    </div>
+        </div>
+    </AuthorizeView>
 
     <main>
         <div class="top-row px-4">
