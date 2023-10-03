@@ -1,4 +1,7 @@
+using Blazored.SessionStorage;
 using BlazorWebAssembly.Client;
+using BlazorWebAssembly.Client.Services;
+using Components.Interfaces;
 using Components.RazorComponents;
 using Data;
 using Data.Models.Interfaces;
@@ -42,5 +45,7 @@ builder.Services.AddOidcAuthentication(options =>
 })
     .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
 
+builder.Services.AddBlazoredSessionStorage();
+builder.Services.AddScoped<IBrowserStorage, BlogBrowserStorage>();
 
 await builder.Build().RunAsync();

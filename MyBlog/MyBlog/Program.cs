@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MyBlog.Data;
+using Components.Interfaces;
+using MyBlog.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +32,8 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 });
 
 builder.Services.AddTransient<ILoginStatus, LoginStatus>();
+builder.Services.AddScoped<IBrowserStorage, BlogProtectedBrowserStorage>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

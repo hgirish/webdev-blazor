@@ -26,7 +26,7 @@ builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>()
         options.CategoriesFolder = "Categories";
     });
 builder.Services.AddScoped<IBlogApi, BlogApiJsonDirectAccess>();
-
+Console.WriteLine($"ClientId: {builder.Configuration["Auth0:ClientId"]}");
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
     options.Domain = builder.Configuration["Auth0:Authority"] ?? "";

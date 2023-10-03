@@ -15,11 +15,11 @@ public class BlogApiJsonDirectAccess : IBlogApi
         IOptions<BlogApiJsonDirectAccessSetting> option)
     {
         _settings = option.Value;
-        Console.WriteLine(Path.GetFullPath(_settings.DataPath));
+        
         if (!Directory.Exists(_settings.DataPath))
         {
            var info = Directory.CreateDirectory(_settings.DataPath);
-            Console.WriteLine($"info: {info}");
+            
         }
         var blogPostsFolderPath =
             $@"{_settings.DataPath}\{_settings.BlogPostsFolder}";
