@@ -1,5 +1,5 @@
 ﻿@typeparam ItemType
-
+@inject IJSRuntime JS
 <h3>List</h3>
 <table>
     <Virtualize Items="@Items" Context="item">
@@ -11,7 +11,7 @@
             <td>@ItemTemplate(item)</td>
             <td>
                 <button class="btn btn-danger"
-                        @onclick="@(()=>{DeleteEvent.InvokeAsync(item);})">
+                        @onclick="@( async ()=>{ if (await ShouldDelete()) {await DeleteEvent.InvokeAsync(item);}})">
                     Delete
                 </button>
             </td>
@@ -28,4 +28,11 @@
     public EventCallback<ItemType> DeleteEvent { get; set; }
     [Parameter]
     public EventCallback<ItemType> SelectEvent { get; set; }
+    IJSObjectReference jsModule;
+    private async Task<bool> ShouldDelete()
+    {
+        jsModule = await JS.InvokeAsync<IJSObjectReference>("import", 
+        "/_content/Components/RazorComponents/ItemList.razor.js");
+        return await jsModule.InvokeAsync<bool>("showConfirm", "Are you sure?");
+    }
 }
